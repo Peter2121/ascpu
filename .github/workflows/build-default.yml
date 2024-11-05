@@ -11,7 +11,7 @@ jobs:
         with:
           operating_system: freebsd
           version: '14.1'
-          usesh: true
+          shell: sh
           prepare: |
             pkg install -y libXpm
           run: |
