@@ -30,4 +30,5 @@ jobs:
             pkg info
             ./configure --with-xpm-includes=/usr/local/include --with-xpm-library=/usr/local/lib
             make
+            sudo mkdir -p /usr/local/man/man1
             sudo make install
