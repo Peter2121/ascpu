@@ -1,0 +1,26 @@
+name: Build-Default
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        uses: cross-platform-actions/action@v0.25.0
+        with:
+          operating_system: freebsd
+          version: '14.1'
+          usesh: true
+          prepare: |
+            pkg install -y libXpm
+          run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+            ./configure --with-xpm-includes=/usr/local/include --with-xpm-library=/usr/local/lib
+            make
+            make install
