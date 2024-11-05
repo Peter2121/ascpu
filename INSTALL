@@ -1,0 +1,32 @@
+DEPENDENCIES
+============
+For ascpu you need xpm library. From the xpmlib manual:
+New XPM updates are announced on the comp.windows.x newsgroup, and on the
+"xpm-talk" list. All new "official" XPM releases can be found by ftp on:
+
+    ftp.x.org          (18.112.44.100) contrib   (Boston, USA)
+    koala.inria.fr     (138.96.24.30) pub/xpm    (Sophia Antipolis, France)
+
+INSTALLATION
+============
+To install the ascpu on your system:
+	
+	./configure
+
+	make
+
+	make install
+
+For FreeBSD users ONLY
+======================
+The FreeBSD version uses the kvm_XXX functions. Using these
+functions requires 'kmem' group privilege. Therefore the
+ascpu binary must setgid to kmem.
+	-- Avatar Liang <avatar@www.mmlab.cse.yzu.edu.tw>
+
+
+For AIX users ONLY
+==================
+On AIX "ascpu" should be installed setuid root to get access to
+kernel memory.
+	-- Kirill Bogachev <bogachev@mech.math.msu.su>

@@ -1,0 +1,272 @@
+.TH ascpu 1 "10 October 2005" "Version 1.11"
+.UC
+.SH NAME
+\fBascpu\fP \- the AfterStep CPU load monitor
+.SH SYNOPSIS
+.B ascpu
+[-h] [-H] [-V]
+        [-iconic] [-withdrawn] [-standout]
+        [-position \fI[+|-]x[+|-]y\fP]
+        [-dev \fIdevice\fP]
+        [-cpu \fInumber\fP]
+        [-u \fIupdate rate\fP]
+        [-samples \fInumber\fP]
+        [-history \fInumber\fP]
+        [-nonice]
+        [-display \fIdisplay\fP]
+        [-title \fIname\fP]
+        [-exe \fIcommand\fP]
+        [-bg \fIcolor\fP]
+        [-fg \fIcolor\fP]
+        [-sys \fIcolor\fP]
+        [-nice \fIcolor\fP]
+        [-user \fIcolor\fP]
+        [-idle \fIcolor\fP]
+.SH DESCRIPTION
+The \fBascpu\fP is a X11 application that acts as
+an a CPU load monitor for computers running Linux,
+FreeBSD or HP-UX.
+The \fBascpu\fP provides a distinctive Afterstep
+window manager look and feel and features multiple
+options to allow the customization.
+.PP
+The right (big) area displays the running history
+of the CPU load. With the default update period of
+1 second it shows the current CPU load. It can be
+made to show average CPU load in bigger steps.
+.PP
+On the left side you have an indicator that shows
+the same values taken average over a number of samples.
+The default number of samples is 60. This means
+with the default setting of update rate
+you see the average CPU load during the last minute.
+If you change it to 1 second you'll see the current
+CPU load there.
+.PP
+The load indicators are divided (by using different colors) 
+into three parts: system CPU time (bright), nice CPU
+time (medium), and the user CPU time (dark).
+The consumed CPU time is displayed in percents of
+total (plus idle time that is) CPU time passed.
+
+.SH CONFIGURATION OPTIONS
+.IP "-h or -H"
+.RS
+prints a short description and usage message.
+.RE
+.IP "-V"
+.RS
+Version control. Prints out the version of the program.
+.RE
+.IP "-position [+|-]x[+|-]y"
+.RS
+Displays the window at the specified location
+on the screen. This works as standard X Windows
+geometry option.
+.RE
+.IP "-iconic"
+.RS
+Starts the \fBascpu\fP application in the iconized mode.
+The icon has the same appearance with the main
+window.
+When this option is given, the -position refers to
+the position of the icon window as well as the main window.
+.RE
+.IP "-withdrawn"
+.RS
+Starts the \fBascpu\fP application in the withdrawn mode.
+This option is necessary to be able to dock the
+\fBascpu\fP in the WindowMaker dock.
+When this option is given, the -position refers to
+the position of the icon window as well as the main window.
+\fBascpu\fP ignores the -iconic option when started
+in withdrawn mode.
+.RE
+.IP "-standout"
+.RS
+This changes the appearance of the \fBascpu\fP display from
+"pushed-in" to "popped-out". The first is the default look.
+According to some the second looks much better in WindowMaker's dock.
+Give it a try in any case.
+.RE
+.IP "-dev <device>"
+.RS
+Using this option you can specify the location of the file
+that serves the CPU statistics information. The default
+location of the this device on Linux systems is /proc/stat.
+.RE
+.IP "-cpu <number>"
+.RS
+Without this parameter the \fBascpu\fP displays statistics
+for the overall system usage on both single-CPU and SMP
+machines. On SMP machines, however, it is possible to obtain
+statistics per CPU. Using this parameter you give the CPU
+number (counted from zero) that you wish to watch.
+
+If you give a CPU number which is bigger than any you actually
+have on your machine (or any CPU number on a single-CPU
+machine) \fBascpu\fP will not show anything in its window
+and start complaining about "invalid character while reading
+/proc/stat" on the stnadard output.
+
+This works only on Linux machines at the moment (I do not
+have a FreeBSD machine myself).
+.RE
+.IP "-u <update rate>"
+.RS
+Changes the polling rate for accessing the CPU
+statistics data. The "-samples" and "-history" are
+specified in units of this polling rate.
+The update rate is specified in seconds. The value
+of 1 is the minimum. Default value is 1 second.
+
+This is useful to change when you use value of 1 for 
+neither -samples nor -history. For example, if you want
+to use "-samples 2 -history 60" (the bar on the left shows
+average load over two seconds and the running history
+shows load update every one minute) you should better
+use "-u 2 -samples 1 -history 30" to decrease the load
+on the CPU produced by the CPU monitor itself.
+.RE
+.IP "-samples <number>"
+.RS
+The number of samples that should be taken for the calculations
+of the average load on the CPU (the bar on the left). The default 
+value is 60.  The minimum number of samples that can be specified 
+is 1. At the sample rate of 1 you turn it into the current load
+indicator. While it it used as an average load indicator
+(sample rate > 1) the average value is calculated statistically
+over the last "<number>" of samples.
+.RE
+.IP "-history <number>"
+.RS
+The number of samples that go into one value displayed
+in the running history window. The CPU load is sampled for
+the specified number of cycles and the value is displayed.
+The default value is 1.
+.RE
+.IP "-nonice"
+.RS
+Force \fBascpu\fP to show the nice CPU time as idle. This
+may become handy if you run some task "niced" in the 
+background and you do not want to see the CPU indicator to
+show 100% load all the time. If this switch is specified the
+nice CPU time is simply added to the idle CPU time and you
+see CPU load only if user/system CPU cycles are consumed.
+.RE
+.IP "-display <name>"
+.RS
+The name of the display to start the window in.
+It works just as X Windows display option.
+.RE
+.IP "-title <name>"
+.RS
+Set the window title and the icon title to the specified name.
+.RE
+.IP "-exe <command>"
+.RS
+Execute the given command when the applet is clicked with the mouse.
+.RE
+.IP "-fg <color>"
+.RS
+The color for the "foreground". This color is used to draw
+the system CPU time. It is darkened by 1.2 to draw the nice
+CPU time. It is darkened by 1.4 to draw the user CPU time.
+See options -sys, -nice, -user to use different colors.
+.RE
+.IP "-bg <color>"
+.RS
+The color for the background of the meter. It is used to draw 
+the idle CPU time and it is lightened a bit and darkened a bit
+to create the 3D appearance of the ground plate.
+See -idle option to draw idle time in a different color.
+.RE
+.IP "-sys <color>"
+.RS
+The color to use for the system CPU time. It overrides the
+color specified with the -fg option.
+.RE
+.IP "-nice <color>"
+.RS
+The color to use for the nice CPU time. It overrides the
+color specified with the -fg option.
+.RE
+.IP "-user <color>"
+.RS
+The color to use for the user CPU time. It overrides the
+color specified with the -fg option.
+.RE
+.IP "-idle <color>"
+.RS
+The color to use for the idle CPU time. It overrides the
+color specified with the -bg option.
+.RE
+.SH INVOCATION
+\fBascpu\fP can be called in different ways.  The most 
+common invocation is the command line:
+.nf
+
+	user@host[1]% ascpu -history 15 -samples 1 -fg "#d04040" &
+
+.fi
+Another way to call \fBascpu\fP is from the window manager:
+.nf
+
+	*Wharf "ascpu" nil Swallow "ascpu" ascpu -u 2 -samples 15 &
+
+.fi
+This line, when placed in the \fIwharf\fP file in the users Afterstep
+configuration directory will cause \fBascpu\fP to be a
+button on the \fBWharf (1)\fP button bar under the \fBafterstep (1)\fP
+window manager.
+
+If you have an SMP machine with two CPUs you can watch both
+CPUs separately and the overall statistics at the same time:
+.nf
+	*Wharf "ascpu" nil Swallow "ascpu" ascpu &
+	*Wharf "ascpu-0" nil Swallow "ascpu-0" ascpu -cpu 0 -title ascpu-0 &
+	*Wharf "ascpu-1" nil Swallow "ascpu-1" ascpu -cpu 1 -title ascpu-1 &
+.fi
+This will result in three \fBascpu\fP windows in your Wharf
+each showing the respective statistics.
+
+If you run WindowMaker then you should use the "-withdrawn"
+option:
+.nf
+
+	user@host[1]% ascpu -withdrawn -standout &
+
+.fi
+and then drag the icon to the dock.
+.SH BUGS
+My programs do not have bugs, they just develop random
+features ;-)
+.PP
+Well, there are limitations. All the strings for the
+color names, display name, and the geometry have the
+length limit of 50 characters (terminating zero included). 
+The string copying routine cuts the names that are longer.
+The limit on the statistics file name is 256 characters.
+.PP
+I had to limit the number of the CPUs in the SMP system
+you are using (lucky you :). Currently up to the CPU number
+15 can be shown (that's 16 of them). If you want more you
+will have to edit the header file state.h and recompile.
+.PP
+The SMP support is not available for FreeBSD at the moment.
+Any volunteers to submit the necessary info and lend a hand
+with development and testing?
+.SH FILES
+.I /proc/stat
+.SH "SEE ALSO"
+.BR top (1), proc (5)
+.SH COPYRIGHTS
+Copyright (c) 1998-2005  Albert Dorofeev <albert@tigr.net>
+
+Distributed under GNU General Public License v2 ; 
+see LICENSE file for more informations.
+.SH AUTHORS
+Albert Dorofeev <albert@tigr.net>
+
+See README file for credits.
+.sp

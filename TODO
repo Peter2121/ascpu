@@ -1,0 +1,11 @@
+These things may be or may be not added to the ascpu tool
+in the future:
+
+	fuf proposed to put the digital indicator
+	over the current one. This sounds like
+	a nice feature but I have problems figuring
+	out where exactly and how these digits
+	must be drawn. Later...
+
+	FreeBSD SMP support
+

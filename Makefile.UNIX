@@ -1,0 +1,60 @@
+#-----------------------------------------------------
+# The locations where this program should be installed
+INSTALL_X_DIR=/usr/local/bin
+MAN_DIR=/usr/local/man/man1
+
+# The location and names of the X11 libraries
+LDIR = -L/usr/X11R6/lib
+LIBS = -lXpm -lX11 -lm
+
+# The include path to the X11 files
+C_INCLUDE = -I. -I/usr/X11R6/include
+
+#-----------------------------------------------------
+CC = gcc
+COPTS = -O2 -pipe -Wall -Wshadow
+#COMPILE_FLAGS = -DDEBUG -DTEST -g
+
+CFLAGS = $(COPTS) $(COMPILE_FLAGS) $(C_INCLUDE)
+
+OBJ = ascpu.o ascpu_x.o safecopy.o x_color.o
+
+all:	ascpu
+	@echo Ready.
+
+ascpu:  $(OBJ)
+	$(CC) $(OBJ) $(LDIR) $(LIBS) -o ascpu
+
+ascpu.o: ascpu.c safecopy.h 
+	$(CC) -c $< $(CFLAGS) -o $@
+
+ascpu_x.o: ascpu_x.c x_color.h background.xpm
+	$(CC) -c $< $(CFLAGS) -o $@
+
+safecopy.o: safecopy.c
+	$(CC) -c $< $(CFLAGS) -o $@
+
+x_color.o: x_color.c
+	$(CC) -c $< $(CFLAGS) -o $@
+
+install: 
+	@echo Installing ascpu in $(INSTALL_X_DIR) ...
+	-@strip ascpu
+	-@if [ -e $(INSTALL_X_DIR)/ascpu ] ; then rm $(INSTALL_X_DIR)/ascpu; fi
+	@cp ascpu $(INSTALL_X_DIR)/ascpu
+	@chmod 755 $(INSTALL_X_DIR)/ascpu
+	@echo Installing the man page in $(MAN_DIR) ...
+	@cp ascpu.man $(MAN_DIR)/ascpu.1x
+	@chmod 644 $(MAN_DIR)/ascpu.1x
+	@echo Done.
+
+uninstall:
+	@echo Uninstalling ascpu in $(INSTALL_X_DIR) ...
+	-@if [ -e $(INSTALL_X_DIR)/ascpu ] ; then rm $(INSTALL_X_DIR)/ascpu; fi
+	@echo Uninstalling the man page in $(MAN_DIR) ...
+	-@if [ -e $(MAN_DIR)/ascpu.1x ] ; then rm $(MAN_DIR)/ascpu.1x; fi
+	@echo Done.
+
+clean:
+	rm -f $(OBJ) ascpu
+

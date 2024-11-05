@@ -1,0 +1,91 @@
+ascpu is a CPU statistics monitor utility for X Windows
+Copyright (c) 1998-2005  Albert Dorofeev <albert@tigr.net>
+For the updates check http://www.tigr.net/
+
+Description:
+============
+
+This is an AfterStep look & feel CPU statistics monitor tool
+for computers running Linux, FreeBSD, HP-UX or AIX.
+
+I just got fed up once that all the AfterStep applets are
+so unconfigurable and decided to write my own so that I have
+the different look the way I want it :) The first to go
+was asload as the simplest. Now it does not contain any
+code (I think so) from asload and is written from scratch by
+truly yours.
+
+What you see on the display:
+	The right (big) area displays the current load on
+	the CPU or rather the load on the CPU during the
+	last update period. Default update period is 1 sec
+	but you can change that. The load is divided into
+	three parts: system CPU time (bright), nice CPU
+	time (medium), and the user CPU time (dark).
+	The consumed CPU time is displayed in percents of
+	total (plus idle time that is) CPU time passed.
+
+	On the left side you have an indicator that shows
+	the same values taken average over a number of samples.
+	The default number of samples is 60. This means
+	with the default setting of update rate once a second
+	you see the average CPU load during the last minute.
+
+Ok, you see, Cory Visi got me into this mess so it is not
+my fault. Anyways, what you just read above is ok, though
+you can use this thing "the other way around". That is, you
+can give a small number of samples to the "average indicator"
+and a big number of samples to the "running history window".
+In that case the average value will be updated more often
+than the running history. For example, if you take a value
+of 1 for the number of samples for the average it will show
+you the actual load on the CPU at this moment. And you can
+at the same time give the value of, let's say, 60 to the
+running history window. Then the running history will actually
+show you average loads over 1 minute periods.
+
+So, there are two exactly opposite ways of running the widget.
+But I am glad to have implemented them :)
+
+Credits:
+========
+
+The original idea and the look concept comes from the
+asload applet by Beat Christen, bchriste@iiic.ethz.ch
+A nice idea of having the ascpu work in a completely
+different way from what I thought was appropriate comes
+from Cory Visi <visi@cmu.edu>.
+Port to FreeBSD systems by Liang Tai-hwa 
+<avatar@www.mmlab.cse.yzu.edu.tw>.
+Thanks to Stewart Gebbie <stewart@global.co.za> for bugfixes.
+Thanks to Evgeny Stambulchik <fnevgeny@plasma-gate.weizmann.ac.il>
+for bugfixes and help with the SMP support.
+Thanks to ii1 <ii1@grant.kharkov.ua> for the -exe option.
+Thanks to Stasinos Konstantopoulos <konstant@let.rug.nl>
+for the HP-UX port.
+Thanks to Kirill Bogachev <bogachev@mech.math.msu.su> for
+the AIX port.
+Thanks to Mathieu Chouquet-Stringer <mathieu@newview.com>
+for the Linux Kernel >= 2.5 port.
+Thanks to Jeff Brown <jabrown@caida.org> for the script
+execute patch for "withdrawn" state.
+Thanks to Kevin Chan-Henry <kch1@dsl.pipex.com> for the
+help in working out the support for kernels > 2.6.10
+
+ascpu contains some code from asapm utility. Do I have to
+give credit to myself? :-) There is some stuff for working 
+with X windows that I inherited from asapm tool and that
+initially comes from some place else. See asapm for credits too.
+
+Distribution:
+=============
+
+The application and the source code are under GPL. See LICENSE 
+file for details.
+
+Naturally, I would like to hear of all changes and improvements 
+made to this utility.
+
+Enjoy and may the source be with you,
+Albert "Tigr"
+

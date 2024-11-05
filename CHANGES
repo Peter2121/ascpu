@@ -1,0 +1,120 @@
+History:
+
+0.1	some time in August 1998
+
+	Original version, shows the same as asload.
+
+0.2	20 September 1998
+
+	The version that works and shows the average.
+	I am looking for a better way to calculate
+	average values so the 1.0 must wait.
+
+1.0	22 September 1998
+
+	Finally I got it all nice working. I could not
+	figure an algorithm that would allow to adjust
+	the number of samples without dynamic allocation
+	of memory though. Probably does not exist ;-)
+
+1.1	03 November 1998
+
+	Oh, well, the whole thing rewritten almost
+	from scratch again. It all started with the
+	message from Cory Visi:
+
+I have suggestion for your cool little Wharf app ascpu. I think that the CPU
+meter on the side should have an interval independent of the graph display.
+The CPU meter on the left is much for useful in real time (little or no
+interval) while the graph is much more useful with a longer interval (like
+10 seconds). So even if you hardcode a 0 or 1 interval for the CPU meter, I
+think that would make it a lot nicer. I use an interval of 10 seconds, so
+the CPU bar is pretty useless :)
+
+	So, it runs in both conventional (as I dreamed it
+	up) and the opposite (as Cory Visi dreamed it up)
+	modes. The intervals are independent :)
+
+1.2	02 January 1999
+
+	Fixed the "-position" option to work with the 
+	negative coordinates.
+
+1.3	07 February 1999
+
+	Thanks to Liang Tai-hwa <avatar@www.mmlab.cse.yzu.edu.tw>
+	the ascpu now runs on FreeBSD systems as well.
+
+1.4	12 April 1999
+
+	Thanks to Stewart Gebbie <stewart@global.co.za> for fixing
+	this embarrasing bug for me. He writes:
+	"I use ascpu but noticed that the -user option didn't
+	seem to work. Apon closer inspection I noticed that
+	the code to check for the -user option was after
+	the -u check and thus the 'if...else' statments
+	picked up the -user as a -u.
+	Attached is a patch for ascpu.c which fixes things."
+
+1.5	28 April 1999
+
+	Thanks to Evgeny Stambulchik <fnevgeny@plasma-gate.weizmann.ac.il>
+	for fixing an annoying bug with "troughs" in the display.
+	Apparently it is possible that the number of CPU cycles
+	decreases by 1 under heavy load... Weird.
+
+	Evgeny also helped me to set up the SMP support which
+	goes out with this version.
+
+	I added the -title option to be able to swallow a number
+	of ascpu instances into the Wharf on an SMP machine.
+
+1.6	06 May 1999
+
+	Thanks to ii1 <ii1@grant.kharkov.ua> who sent in a patch
+	ascpu can execute commands when clicked on now.
+
+1.7	27 July 1999
+
+	Stasinos Konstantopoulos <konstant@let.rug.nl> ported
+	ascpu to HP-UX and kindly sent in the patch.
+
+1.8	16 December 1999
+
+	Changed the internal loop to react to the absolute
+	value of the difference in time for the update.
+	Suggested by Nicola Bernardini <nicb@axnet.it>
+
+1.9	09 March 2000
+
+	Fixes the security problem on the systems where ascpu
+	must run with some kmem or root privileges (SUID)
+	to access the system information (FreeBSD and now AIX).
+	It was possible to execute arbitrary commands using
+	the privilege. Now ascpu forks and the child drops
+	privileges to execute the command.
+
+	Kirill Bogachev <bogachev@mech.math.msu.su> ported
+	ascpu to AIX on PowerPC:
+	"I have ported it to AIX running on PowerPC. The port has been tested
+	on AIX 4.1 but should works on AIX > 3.1.
+	...
+	In AIX "ascpu" should be installed setuid root to get access to
+	kernel memory."
+
+1.10	17 January 2004
+
+	Patch by Mathieu Chouquet-Stringer <mathieu@newview.com>
+	for Linux Kernel >= 2.5
+	Patch by Jeff Brown <jabrown@caida.org> for script
+	execution from "withdrawn" state.
+
+1.11	10 October 2005
+
+	Thanks to Kevin Chan-Henry <kch1@dsl.pipex.com> for
+	pointing out that the Linux kernels after 2.6.10
+	introduce an additional field in /proc/stat.
+	If you never used the "-cpu" switch you will not be
+	affected. But with multiple CPUs ascpu breaks.
+	So this version should fix that.
+
