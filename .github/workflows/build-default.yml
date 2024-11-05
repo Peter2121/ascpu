@@ -8,27 +8,66 @@ jobs:
     name: build-default
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Startup VM
+        uses: cross-platform-actions/action@v0.25.0
+        with:
+          operating_system: freebsd
+          version: '14.1'
+          architecture: x86_64
+          memory: 2G
+          cpu_count: 2
+          shell: sh
+          shutdown_vm: false
+          run: uname -a
+
+      - name: Install dependencies
         uses: cross-platform-actions/action@v0.25.0
         env:
           ASSUME_ALWAYS_YES: yes
         with:
           operating_system: freebsd
           version: '14.1'
-          shell: sh
+          architecture: x86_64
           memory: 2G
           cpu_count: 2
+          shell: sh
+          shutdown_vm: false
+          sync_files: false
           environment_variables: DEV ASSUME_ALWAYS_YES
           run: |
-            uname -a
-            pwd
-            ls -lah
-            whoami
             env
             sudo pkg install -y libXpm
             pkg info
+
+      - name: Build
+        uses: cross-platform-actions/action@v0.25.0
+        with:
+          operating_system: freebsd
+          version: '14.1'
+          shell: sh
+          memory: 2G
+          cpu_count: 2
+          shutdown_vm: false
+          sync_files: false
+          environment_variables: DEV
+          run: |
+            env
             ./configure --with-xpm-includes=/usr/local/include --with-xpm-library=/usr/local/lib
             make
             sudo mkdir -p /usr/local/man/man1
             sudo make install
+
+      - name: Shutdown VM
+        uses: cross-platform-actions/action@v0.25.0
+        with:
+          operating_system: freebsd
+          version: '14.1'
+          shell: sh
+          memory: 2G
+          cpu_count: 2
+          sync_files: false
+          shutdown_vm: true
+          run: true
