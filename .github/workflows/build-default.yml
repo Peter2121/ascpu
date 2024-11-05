@@ -1,8 +1,11 @@
 name: Build-Default
 on: workflow_dispatch
+env:
+  DEV: YES
 
 jobs:
-  build:
+  build-default:
+    name: build-default
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,13 +15,15 @@ jobs:
           operating_system: freebsd
           version: '14.1'
           shell: sh
+          memory: 2G
+          cpu_count: 2
           run: |
             uname -a
-            echo $SHELL
             pwd
             ls -lah
             whoami
-            env | sort
+            env
+            pkg bootstrap -f
             pkg install -y libXpm
             pkg info
             ./configure --with-xpm-includes=/usr/local/include --with-xpm-library=/usr/local/lib
