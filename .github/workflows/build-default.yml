@@ -13,6 +13,8 @@ jobs:
 
       - name: Startup VM
         uses: cross-platform-actions/action@v0.25.0
+        env:
+          ASSUME_ALWAYS_YES: yes
         with:
           operating_system: freebsd
           version: '14.1'
@@ -21,6 +23,7 @@ jobs:
           cpu_count: 2
           shell: sh
           shutdown_vm: false
+          environment_variables: DEV ASSUME_ALWAYS_YES
           run: uname -a
 
       - name: Install dependencies
