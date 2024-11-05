@@ -26,8 +26,7 @@ jobs:
             ls -lah
             whoami
             env
-            pkg bootstrap -f
-            pkg install -y libXpm
+            sudo pkg install -y libXpm
             pkg info
             ./configure --with-xpm-includes=/usr/local/include --with-xpm-library=/usr/local/lib
             make
